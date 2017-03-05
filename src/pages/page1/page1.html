@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Watson</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content (click)="outsideKeyboard($event)">
+  <ion-list no-lines>
+
+    <ion-card *ngFor="let m of messages" [ngClass]="{'vous': m.float === 'right'}" >
+      <ion-card-header class="entete" >
+        {{m.title}}
+      </ion-card-header>
+
+      <ion-card-content>
+        {{m.message}}
+      </ion-card-content>
+    </ion-card>
+
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar position="bottom">
+    <ion-row>
+      <ion-col width-80>
+        <ion-item>
+          <input type="text" placeholder="Message" [(ngModel)]="message">
+        </ion-item>
+      </ion-col>
+      <ion-col width-20>
+        <button ion-button icon-only round (click)="postMessage($event, message)">
+          <ion-icon name="send"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
