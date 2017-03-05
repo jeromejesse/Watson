@@ -12,5 +12,22 @@ page-page1 {
       width: 100%;
       border: none;
     }
+    .bouton{
+      width: 15%;
+    }
 	}
+
+  ion-col[width-70] {
+    -webkit-flex: 0 0 70%;
+    -ms-flex: 0 0 70%;
+    flex: 0 0 70%;
+    max-width: 70%;
+  }
+
+  ion-col[width-15] {
+    -webkit-flex: 0 0 15%;
+    -ms-flex: 0 0 15%;
+    flex: 0 0 15%;
+    max-width: 15%;
+  }
 }

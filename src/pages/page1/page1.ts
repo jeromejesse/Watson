@@ -34,4 +34,9 @@ export class Page1 {
     this.message = '';
   }
 
+  listenMessage(event) {
+    Keyboard.close();
+    this.message = '';
+  }
+
 }

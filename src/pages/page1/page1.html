@@ -26,14 +26,19 @@
 <ion-footer>
   <ion-toolbar position="bottom">
     <ion-row>
-      <ion-col width-80>
+      <ion-col width-70>
         <ion-item>
           <input type="text" placeholder="Message" [(ngModel)]="message">
         </ion-item>
       </ion-col>
-      <ion-col width-20>
+      <ion-col class="bouton" width-15>
         <button ion-button icon-only round (click)="postMessage($event, message)">
           <ion-icon name="send"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col class="bouton" width-15>
+        <button ion-button icon-only round (click)="listenMessage($event)">
+          <ion-icon name="mic"></ion-icon>
         </button>
       </ion-col>
     </ion-row>
