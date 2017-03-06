@@ -15,13 +15,14 @@
 <ion-content (click)="outsideKeyboard($event)">
   <ion-list no-lines>
 
-      <ion-row *ngFor="let m of messages" >
-        <ion-col width-20 *ngIf="m.title == 'Watson'">
+      <ion-row *ngFor="let m of messages">
+        <ion-col width-20 *ngIf="m.title == 'Watson' && !m.responses">
           <img class="icon-bulle bulle" src="assets/images/{{m.title}}.png"/>
         </ion-col>
 
         <ion-col width-80>
-          <ion-card [ngClass]="{'vous': m.float === 'right'}" >
+
+          <ion-card [ngClass]="{'vous': m.float === 'right'}" *ngIf="!m.responses">
             <ion-card-header class="entete" >
               {{m.title}}
             </ion-card-header>
@@ -30,9 +31,10 @@
               {{m.message}}
             </ion-card-content>
           </ion-card>
+
         </ion-col>
 
-        <ion-col width-20 *ngIf="m.title == 'Vous'">
+        <ion-col width-20 *ngIf="m.title == 'Vous' && !m.responses">
           <img class="icon-bulle-vous bulle" src="assets/images/{{m.title}}.png"/>
         </ion-col>
       </ion-row>
@@ -42,7 +44,15 @@
 
 <ion-footer>
   <ion-toolbar position="bottom">
-    <ion-row>
+    <ion-row *ngIf="haveResponse == 'multi'">
+      <button *ngFor="let r of messages[messages.length - 1].responses"  ion-button class="response-50" (click)="responseChoose($event, r)">
+        {{r.label}}
+      </button>
+    </ion-row>
+    <ion-row *ngIf="haveResponse == 'datetime'">
+      <ion-datetime displayFormat="DD MMMM YYYY hh:mm" pickerFormat="DD MMM YYYY hh:mm" min="2016" max="2020-10-31" [(ngModel)]="dateTime"></ion-datetime>
+    </ion-row>
+    <ion-row *ngIf="haveResponse === ''">
       <ion-col width-70>
         <ion-item>
           <input type="text" placeholder="Message" [(ngModel)]="message">

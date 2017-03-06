@@ -3,17 +3,21 @@ import {Component, ChangeDetectorRef} from '@angular/core';
 import {NavController, PopoverController} from 'ionic-angular';
 import { Keyboard, SpeechRecognition } from 'ionic-native';
 import { PopoverAgent } from "../popup/agent";
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'page-page1',
-  templateUrl: 'page1.html'
+  templateUrl: 'page1.html',
+  providers: [MessageService]
 })
 export class Page1 {
-  messages: Array<{title: string, message: string, float:string}>;
+  messages: Array<any>;
   message: string = '';
   record: Boolean = false;
+  haveResponse: String = "";
+  dateTime = new Date();
 
-  constructor(public navCtrl: NavController, private ref: ChangeDetectorRef, private popoverCtrl: PopoverController) {
+  constructor(public navCtrl: NavController, private ref: ChangeDetectorRef, private popoverCtrl: PopoverController, private messageService: MessageService) {
     this.messages = [];
     this.messages.push({
       title: 'Watson',
@@ -74,6 +78,14 @@ export class Page1 {
   }
 
   addMessage(message){
+    console.log(this.dateTime);
+    this.messageService.postMessage(message).then((data) => {
+      this.addMessageFromWatson(data.message);
+      this.haveResponse = "";
+      if(data.reponses){
+        this.addReponse(data.reponses);
+      }
+    });
     this.messages.push({
       title: 'Vous',
       message: message,
@@ -81,11 +93,56 @@ export class Page1 {
     });
   }
 
+  addMessageFromWatson(message){
+    this.messages.push({
+      title: 'Watson',
+      message: message,
+      float: 'left'
+    })
+  }
+
+  addReponse(reponse){
+    console.log(reponse);
+    if ( reponse.length > 1 ) {
+      this.messages.push({
+        title: 'Vous',
+        responses: reponse,
+        float: 'right'
+      });
+      this.haveResponse = "multi";
+    } else {
+      if ( reponse.length > 0 ) {
+        this.messages.push({
+          title: 'Vous',
+          responses: reponse,
+          float: 'right'
+        });
+        this.haveResponse = "datetime";
+      }
+    }
+  }
+
   popOverAgent(event){
     console.log("popOverAgent");
     let popover = this.popoverCtrl.create(PopoverAgent, {});
     popover.present({
       ev: event
+    });
+  }
+
+  responseChoose(event, response){
+    console.log("response", response);
+    this.messageService.postMessage(response.code).then((data) => {
+      this.addMessageFromWatson(data.message);
+      this.haveResponse = "";
+      if(data.reponses){
+        this.addReponse(data.reponses);
+      }
+    });
+    this.messages.push({
+      title: 'Vous',
+      message: response.label,
+      float: 'right'
     });
   }
 

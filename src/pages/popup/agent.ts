@@ -23,7 +23,6 @@ import { Component } from '@angular/core';
         <a href="mailto:marc.lamby@foyer.lu?Subject=Hello%20from%20Watson">
           <ion-icon class="call-bulle" name="mail"></ion-icon>
         </a>
-          
         </ion-col>
       </ion-row>
     </ion-list>
