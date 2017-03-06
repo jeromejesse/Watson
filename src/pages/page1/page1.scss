@@ -1,12 +1,20 @@
 page-page1 {
+  .card-ios {
+    border-radius: 15px;
+    background-color: #387ef5;
+    color: white;
+  }
+
 	ion-card-header.entete {
-		font-size: 12px;
+		font-size: 14px;
     	font-weight: 600;
-    	color: #7d7d7d;
+    	color: white;
 	}
+
 	.vous {
     text-align: right;
 	}
+
   ion-footer{
     input {
       width: 100%;
@@ -33,5 +41,20 @@ page-page1 {
 
   .red {
     background-color:red;
+  }
+  .icon-bulle {
+    margin-top: 35%;
+    margin-left: 14%;
+  }
+  .icon-bulle-vous {
+    margin-top: 10%;
+  }
+
+  .bulle {
+    border-radius: 50%;
+    border: 5px solid #F2F8F9;
+    width: 60px;
+    height: 60px;
+    margin-right: 14%;
   }
 }

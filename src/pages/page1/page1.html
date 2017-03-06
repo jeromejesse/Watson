@@ -4,21 +4,38 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Watson</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="popOverAgent($event)" >
+        <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content (click)="outsideKeyboard($event)">
   <ion-list no-lines>
 
-    <ion-card *ngFor="let m of messages" [ngClass]="{'vous': m.float === 'right'}" >
-      <ion-card-header class="entete" >
-        {{m.title}}
-      </ion-card-header>
+      <ion-row *ngFor="let m of messages" >
+        <ion-col width-20 *ngIf="m.title == 'Watson'">
+          <img class="icon-bulle bulle" src="assets/images/{{m.title}}.png"/>
+        </ion-col>
 
-      <ion-card-content>
-        {{m.message}}
-      </ion-card-content>
-    </ion-card>
+        <ion-col width-80>
+          <ion-card [ngClass]="{'vous': m.float === 'right'}" >
+            <ion-card-header class="entete" >
+              {{m.title}}
+            </ion-card-header>
+
+            <ion-card-content>
+              {{m.message}}
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col width-20 *ngIf="m.title == 'Vous'">
+          <img class="icon-bulle-vous bulle" src="assets/images/{{m.title}}.png"/>
+        </ion-col>
+      </ion-row>
 
   </ion-list>
 </ion-content>

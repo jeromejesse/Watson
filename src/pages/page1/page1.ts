@@ -1,7 +1,8 @@
 import {Component, ChangeDetectorRef} from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import {NavController, PopoverController} from 'ionic-angular';
 import { Keyboard, SpeechRecognition } from 'ionic-native';
+import { PopoverAgent } from "../popup/agent";
 
 @Component({
   selector: 'page-page1',
@@ -12,7 +13,7 @@ export class Page1 {
   message: string = '';
   record: Boolean = false;
 
-  constructor(public navCtrl: NavController, private ref: ChangeDetectorRef) {
+  constructor(public navCtrl: NavController, private ref: ChangeDetectorRef, private popoverCtrl: PopoverController) {
     this.messages = [];
     this.messages.push({
       title: 'Watson',
@@ -77,6 +78,14 @@ export class Page1 {
       title: 'Vous',
       message: message,
       float: 'right'
+    });
+  }
+
+  popOverAgent(event){
+    console.log("popOverAgent");
+    let popover = this.popoverCtrl.create(PopoverAgent, {});
+    popover.present({
+      ev: event
     });
   }
 
