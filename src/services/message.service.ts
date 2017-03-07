@@ -7,6 +7,7 @@ import 'rxjs/add/operator/toPromise';
 export class MessageService {
 
   private messageUrl = 'http://192.168.201.56:8081/messages';  // URL to web api
+  private notificationsUrl = 'http://192.168.201.56:8081/notifications';  // URL to web api
 
   constructor(private http: Http) {
   }
@@ -15,6 +16,13 @@ export class MessageService {
     return this.http.post(this.messageUrl, {
       question : message
     })
+      .toPromise()
+      .then(response => response.json())
+      .catch(this.handleError);
+  }
+
+  getMessage(): Promise<any> {
+    return this.http.get(this.notificationsUrl)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);

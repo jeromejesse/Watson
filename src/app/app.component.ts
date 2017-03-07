@@ -22,7 +22,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Watson', component: Page1 },
-      { title: 'Documents', component: Page2 },
+      { title: 'Ma famille', component: Page2 },
       { title: 'Paramétres', component: Page3 },
     ];
 

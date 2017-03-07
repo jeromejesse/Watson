@@ -3,21 +3,61 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Page Two</ion-title>
+    <ion-title>Ma famille</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon [name]="item.icon" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
-      </div>
-    </button>
+    <ion-list>
+      <ion-item-sliding #item>
+        <ion-item class="item" (click)="goToFamille(1)">
+          <ion-avatar item-left="">
+            <img src="assets/images/Vous.png">
+          </ion-avatar>
+          <h2>Alain Schmitz</h2>
+          <h3 item-right>48 ans</h3>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="supprimer(item)">Supprimer</button>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-item-sliding #item>
+        <ion-item class="item" (click)="goToFamille(2)">
+          <ion-avatar item-left="">
+            <img src="assets/images/Cindy.png">
+          </ion-avatar>
+          <h2>Cindy Schmitz</h2>
+          <h3 item-right>46 ans</h3>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="supprimer(item)">Supprimer</button>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-item-sliding #item>
+        <ion-item class="item" (click)="goToFamille(3)">
+          <ion-avatar item-left="">
+            <img src="assets/images/Clara.png">
+          </ion-avatar>
+          <h2>Clara Schmitz</h2>
+          <h3 item-right>17 ans</h3>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="supprimer(item)">Supprimer</button>
+        </ion-item-options>
+      </ion-item-sliding>
+      <ion-item-sliding #item>
+        <ion-item class="item" (click)="goToFamille(4)">
+          <ion-avatar item-left="">
+            <img src="assets/images/Tim.png">
+          </ion-avatar>
+          <h2>Tim Schmitz</h2>
+          <h3 item-right>9 ans</h3>
+        </ion-item>
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="supprimer(item)">Supprimer</button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
   </ion-list>
-  <div *ngIf="selectedItem" padding>
-    You navigated here from <b>{{selectedItem.title}}</b>
-  </div>
 </ion-content>

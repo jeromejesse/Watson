@@ -15,13 +15,20 @@ import { Component } from '@angular/core';
       </ion-row>
       <ion-row>
         <ion-col class="padding-left-25" width-50>
-          <a href="tel:003524469301">
+          <a href="tel:00352661272021">
             <ion-icon class="call-bulle" name="call"></ion-icon>
           </a>
         </ion-col>
         <ion-col class="padding-left-25" width-50 >
         <a href="mailto:marc.lamby@foyer.lu?Subject=Hello%20from%20Watson">
           <ion-icon class="call-bulle" name="mail"></ion-icon>
+        </a>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-left-25 margin-left-50" width-100 >
+        <a href="facetime:00352661272021">
+          <ion-icon class="call-bulle green" name="videocam"></ion-icon>
         </a>
         </ion-col>
       </ion-row>

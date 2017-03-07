@@ -45,12 +45,19 @@
 <ion-footer>
   <ion-toolbar position="bottom">
     <ion-row *ngIf="haveResponse == 'multi'">
-      <button *ngFor="let r of messages[messages.length - 1].responses"  ion-button class="response-50" (click)="responseChoose($event, r)">
+      <button *ngFor="let r of messages[messages.length - 1].responses" ion-button class="response-50" (click)="responseChoose($event, r)">
         {{r.label}}
       </button>
     </ion-row>
     <ion-row *ngIf="haveResponse == 'datetime'">
-      <ion-datetime displayFormat="DD MMMM YYYY hh:mm" pickerFormat="DD MMM YYYY hh:mm" min="2016" max="2020-10-31" [(ngModel)]="dateTime"></ion-datetime>
+      <ion-col width-85>
+        <ion-datetime displayFormat="DD MMMM YYYY HH:mm" pickerFormat="DD MMM YYYY HH:mm" min="2016" max="2020-10-31" [(ngModel)]="dateTime"></ion-datetime>
+      </ion-col>
+      <ion-col width-15>
+        <button ion-button icon-only round (click)="postMessageDateTime($event, dateTime)">
+          <ion-icon name="send"></ion-icon>
+        </button>
+      </ion-col>
     </ion-row>
     <ion-row *ngIf="haveResponse === ''">
       <ion-col width-70>
@@ -67,6 +74,26 @@
         <button ion-button icon-only round (click)="listenMessage($event)" [ngClass]="{'red': record}">
           <ion-icon name="mic"></ion-icon>
         </button>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="haveResponse == 'call'">
+      <ion-col class="padding-left-25" width-20>
+        <a href="tel:00352661272021">
+          <ion-icon class="call-bulle" name="call"></ion-icon>
+        </a>
+      </ion-col>
+      <ion-col class="padding-left-25" width-20>
+        <a href="mailto:marc.lamby@foyer.lu?Subject=Hello%20from%20Watson">
+          <ion-icon class="call-bulle" name="mail"></ion-icon>
+        </a>
+      </ion-col>
+      <ion-col class="padding-left-25" width-20>
+        <a href="facetime:00352661272021">
+          <ion-icon class="call-bulle green" name="videocam"></ion-icon>
+        </a>
+      </ion-col>
+      <ion-col class="padding-left-25" width-20 (click)="resetMessage($event)">
+          <ion-icon class="call-bulle red" name="close"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-toolbar>

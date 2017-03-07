@@ -15,7 +15,7 @@ export class Page1 {
   message: string = '';
   record: Boolean = false;
   haveResponse: String = "";
-  dateTime = new Date();
+  dateTime = "2017-03-07T18:00:00Z";
 
   constructor(public navCtrl: NavController, private ref: ChangeDetectorRef, private popoverCtrl: PopoverController, private messageService: MessageService) {
     this.messages = [];
@@ -23,8 +23,16 @@ export class Page1 {
       title: 'Watson',
       message:'Bonjour je suis Watson, votre assistant personnel en assurance',
       float: 'left'
-    })
+    });
     this.ref = ref;
+    const getNotif = this.getNotification;
+    const ms = messageService;
+    const detectChanges = this.ref.detectChanges;
+    let messages = this.messages
+    setInterval(function(){
+      getNotif(ms, messages, detectChanges);
+    }, 5000);
+
   }
 
   outsideKeyboard(event) {
@@ -34,6 +42,11 @@ export class Page1 {
 
   postMessage(event, message) {
     this.addMessage(message);
+    this.message = '';
+  }
+
+  postMessageDateTime(event, message) {
+    this.addMessageDateTime(message);
     this.message = '';
   }
 
@@ -71,6 +84,7 @@ export class Page1 {
           console.log(matches);
           //this.message = matches[0];
           this.addMessage(matches[0]);
+          this.record = false;
           this.ref.detectChanges();
         },
         (onerror) => console.log('error:', onerror)
@@ -78,17 +92,36 @@ export class Page1 {
   }
 
   addMessage(message){
-    console.log(this.dateTime);
+    this.record = false;
     this.messageService.postMessage(message).then((data) => {
       this.addMessageFromWatson(data.message);
       this.haveResponse = "";
       if(data.reponses){
         this.addReponse(data.reponses);
       }
+      this.ref.detectChanges();
     });
     this.messages.push({
       title: 'Vous',
       message: message,
+      float: 'right'
+    });
+  }
+
+  addMessageDateTime(message){
+    this.record = false;
+    this.messageService.postMessage('dateTime').then((data) => {
+      this.addMessageFromWatson(data.message);
+      this.haveResponse = "";
+      if(data.reponses){
+        this.addReponse(data.reponses);
+      }
+      this.ref.detectChanges();
+    });
+    let date = new Date(message);
+    this.messages.push({
+      title: 'Vous',
+      message: date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
       float: 'right'
     });
   }
@@ -112,12 +145,29 @@ export class Page1 {
       this.haveResponse = "multi";
     } else {
       if ( reponse.length > 0 ) {
-        this.messages.push({
-          title: 'Vous',
-          responses: reponse,
-          float: 'right'
-        });
-        this.haveResponse = "datetime";
+        if ( reponse[0].code === 'dateTime' ){
+          this.messages.push({
+            title: 'Vous',
+            responses: reponse,
+            float: 'right'
+          });
+          this.haveResponse = "datetime";
+        }
+        else{
+          if ( reponse[0].code === 'call' ){
+            this.haveResponse = "call";
+          }
+          else {
+            this.messages.push({
+              title: 'Vous',
+              responses: reponse,
+              float: 'right'
+            });
+            this.haveResponse = "";
+          }
+
+        }
+
       }
     }
   }
@@ -138,6 +188,7 @@ export class Page1 {
       if(data.reponses){
         this.addReponse(data.reponses);
       }
+      this.ref.detectChanges();
     });
     this.messages.push({
       title: 'Vous',
@@ -146,4 +197,23 @@ export class Page1 {
     });
   }
 
+  resetMessage(event){
+    this.haveResponse = "";
+  }
+
+  //Notifications
+  getNotification(ms, messages, detectChanges){
+    ms.getMessage().then((data) => {
+      if(data){
+        messages.push({
+          title: 'Watson',
+          message: data.label,
+          float: 'left'
+        });
+        detectChanges();
+      }
+    }, () => console.log("error notifications"));
+  }
+
+  //addNotification
 }

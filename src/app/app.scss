@@ -22,3 +22,37 @@
   height: 60px;
   margin-right: 14%;
 }
+
+.avatar-menu {
+  border-radius: 50%;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 0px;
+  border: 8px solid #ffffff;
+  margin-bottom: 25px;
+}
+
+ion-menu{
+  .toolbar-ios{
+    ion-title {
+      position: absolute;
+      top: 269px;
+      left: 0;
+      padding: 0px;
+      width: 100%;
+      height: auto;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      pointer-events: none;
+      .toolbar-title {
+        color: #FFF;
+      }
+    }
+    .toolbar-background {
+      background: #88c2ef;
+    }
+  }
+  .scroll-content {
+    background: #88c2ef;
+  }
+}
